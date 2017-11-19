@@ -30,7 +30,6 @@ To switch to master (though you shouldn't ever need to), type: git checkout mast
 3) type: git push  --> This pushes your code to the github repository online making it ready to merge onto the master branch
 4) Go to the github repository Budgie on github.com 
 5) Create a pull request:
-6) Go to the github repository Budgie on github.com
 7) Go to the "Pull requests" tab
 8) Then there should be a green button available that says "New Pull Request".  Click that.
 9) Make sure that the first button says "base: master" and the second button says "compare: master"
