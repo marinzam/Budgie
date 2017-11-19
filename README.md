@@ -26,7 +26,7 @@ To switch to master (though you shouldn't ever need to), type: git checkout mast
 
 #### How to save changes/push your code:
 1) type: git add . --> This adds all changes
-2) type: git commit -m "[description of the work you did/changed" --> This is like an intermediary save step
+2) type: git commit -m "[description of the work you did/changed]" --> This is like an intermediary save step
 3) type: git push  --> This pushes your code to the github repository online making it ready to merge onto the master branch
 4) Go to the github repository Budgie on github.com 
 5) Create a pull request:
