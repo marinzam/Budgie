@@ -12,18 +12,18 @@ A web application that budgets your salary!
 5) type "git clone" and then paste the link, hit enter
 Now you can open this in your IDE that you use to edit your code.
 
-#### Every time you want to work on the project:
-1) Open terminal
-2) Go into the repository (ie. sbertrand/Documents/Budgie)
-3) type: git fetch
-4) type: git pull
-
 #### Create your own branch:
 1) Open terminal
 2) Go into the repository 
 3) type: git checkout -b [yourname]-workshop --> (ie. git checkout -b steph-workshop).  This will create your new branch.
 4) type: git checkout [yourname]-workshop --> This switches you into your branch so that you're working from your personal branch.
 To switch to master (though you shouldn't ever need to), type: git checkout master
+
+#### Every time you want to work on the project:
+1) Open terminal
+2) Go into the repository (ie. sbertrand/Documents/Budgie)
+3) type: git fetch
+4) type: git pull
 
 #### How to save changes/push your code:
 1) type: git add . --> This adds all changes
