@@ -31,10 +31,10 @@ How to save changes/push your code:
 3) type: git push  --> This pushes your code to the github repository online making it ready to merge onto the master branch
 4) Go to the github repository Budgie on github.com 
 5) Create a pull request:
-  a) Go to the github repository Budgie on github.com
-  b) Go to the "Pull requests" tab
-  c) Then there should be a green button available that says "New Pull Request".  Click that.
-  d) Make sure that the first button says "base: master" and the second button says "compare: master"
-  e) If there are no conflicts and it says, "Ready to be merged", then click "Merge"
-  f) If it gives you an option to close your branch, ignore it, we're just going to keep our branches throughout the project and merge the entire time
-**NOTE: You should create a pull request at the end of the day when you're happy with all the work you did and are ready for it to be merged. So push often (it will collect the pushes), and pull request/merge at the end of the day.
+6) Go to the github repository Budgie on github.com
+7) Go to the "Pull requests" tab
+8) Then there should be a green button available that says "New Pull Request".  Click that.
+9) Make sure that the first button says "base: master" and the second button says "compare: master"
+10) If there are no conflicts and it says, "Ready to be merged", then click "Merge"
+11) If it gives you an option to close your branch, ignore it, we're just going to keep our branches throughout the project and merge the entire time
+12)**NOTE: You should create a pull request at the end of the day when you're happy with all the work you did and are ready for it to be merged. So push often (it will collect the pushes), and pull request/merge at the end of the day.
