@@ -37,4 +37,4 @@ How to save changes/push your code:
 9) Make sure that the first button says "base: master" and the second button says "compare: master"
 10) If there are no conflicts and it says, "Ready to be merged", then click "Merge"
 11) If it gives you an option to close your branch, ignore it, we're just going to keep our branches throughout the project and merge the entire time
-12)**NOTE: You should create a pull request at the end of the day when you're happy with all the work you did and are ready for it to be merged. So push often (it will collect the pushes), and pull request/merge at the end of the day.
+12) **NOTE: You should create a pull request at the end of the day when you're happy with all the work you did and are ready for it to be merged. So push often (it will collect the pushes), and pull request/merge at the end of the day.
