@@ -12,7 +12,7 @@ A web application that budgets your salary!
 5) type "git clone" and then paste the link, hit enter
 Now you can open this in your IDE that you use to edit your code.
 
-#### <b>Every time you want to work on the project<b>:
+#### Every time you want to work on the project:
 1) Open terminal
 2) Go into the repository (ie. sbertrand/Documents/Budgie)
 3) type: git fetch
