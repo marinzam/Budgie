@@ -9,8 +9,7 @@ A web application that budgets your salary!
 2) Click the green button that says "Clone or download" on the Budgie repository home page in github
 3) It should expand to a small window, then click on the little clipboard icon. This copies the link.
 4) On terminal, go into the directory you want to save this repository in (ie. sbertrand/Documents/)
-5) type "git clone" and then paste the link, hit enter
-Now you can open this in your IDE that you use to edit your code.
+5) type: "git clone" and then paste the link. Hit enter. Now you can open this in your IDE that you use to edit your code.
 
 #### Create your own branch:
 1) Open terminal
