@@ -14,8 +14,8 @@ A web application that budgets your salary!
 #### Create your own branch:
 1) Open terminal
 2) Go into the repository 
-3) type: git checkout -b [yourname]-workshop --> (ie. git checkout -b steph-workshop).  This will create your new branch.
-4) type: git checkout [yourname]-workshop --> This switches you into your branch so that you're working from your personal branch.
+3) type: git checkout -b [yourname]-workshop --> (ie. git checkout -b steph-workshop).  This will create your new branch and automatically switch you into it.
+4) OPTIONAL - type: git checkout [yourname]-workshop --> This switches you into your branch so that you're working from your personal branch.
 To switch to master (though you shouldn't ever need to), type: git checkout master
 
 #### Every time you want to work on the project:
