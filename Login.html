@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang='en-US'>
+<head>
+	<title>Budgie</title>
+	<link rel='stylesheet' type='text/css' href='Login.css'>
+	<link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
+</head>
+<body>
+	<div class='welcome'>
+		<h1>Budgie</h1>
+	</div>
+	<div class='form'>
+		<div class = "options">
+			<button class = "tablink" onclick = "openOption('login', this, '#112C5F')" id = "defaultOpen">Login</button>
+			<button class = "tablink" onclick = "openOption('signup', this, '#112C5F')">Sign Up</button>
+		</div>
+		<div id="container">   
+			<div id = "login" class = "tabcontent">
+	        	<h2>Welcome Back!</h2>
+	          
+	        	<form action="/" method="post">
+	        
+	        		<input type="email" placeholder = "Enter Email" name = 'user_email' required>
+	         	          
+	        		<input type="password" placeholder = "Enter Password" name = "psw" required>
+
+	        		<button type = "submit">Login</button>
+	          
+	        	</form>
+	      	</div>
+
+	      	<div id = "signup" class = "tabcontent">
+		      	<h2>Sign Up</h2>
+	          
+	          	<form action="/" method="post">
+	         
+	            <input type="text" placeholder = "First Name" required>
+
+	            <input type="text" placeholder = "Last Name" required>
+
+	            <input type="email" placeholder = "Email" required>
+
+	            <input type="password" placeholder = "Create a password" required>
+	          
+	          	<button type="submit" class = "bottom">Get Started</button>
+	          
+	          	</form>
+	      	</div>
+
+        </div>
+	</div>
+	<script>
+		function openOption(optionName, elmnt, color) {
+	    // Hide all elements with class="tabcontent" by default */
+	    var i, tabcontent, tablinks;
+	    tabcontent = document.getElementsByClassName("tabcontent");
+	    for (i = 0; i < tabcontent.length; i++) {
+	        tabcontent[i].style.display = "none";
+	    }
+
+	    // Remove the background color of all tablinks/buttons
+	    tablinks = document.getElementsByClassName("tablink");
+	    for (i = 0; i < tablinks.length; i++) {
+	        tablinks[i].style.backgroundColor = "";
+	        tablinks[i].style.color = "";
+	    }
+
+	    // Show the specific tab content
+	    document.getElementById(optionName).style.display = "block";
+	    elmnt.style.backgroundColor = color;
+	    elmnt.style.color = 'white';
+
+		}
+
+		// Get the element with id="defaultOpen" and click on it
+		document.getElementById("defaultOpen").click();
+
+	</script>
+</body>
+</html>
