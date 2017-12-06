@@ -1,0 +1,44 @@
+CREATE TABLE IF NOT EXISTS ProfUser(
+    UserID VARCHAR(40) NOT NULL,
+    HashedPassword VARCHAR(255) NOT NULL,
+    Salt VARCHAR(10) NOT NULL,
+    PRIMARY KEY (teamID)
+);
+
+CREATE TABLE IF NOT EXISTS ProfStateTax(
+    StateBracketID INT NOT NULL AUTO_INCREMENT,
+    StateID CHAR(2) NOT NULL,
+    MinIncome INT NOT NULL,
+    MaxIncome INT NOT NULL,
+    Percent SMALLINT NOT NULL,
+    PRIMARY KEY (BracketID)
+);
+
+CREATE TABLE IF NOT EXISTS ProjFedTax(
+    FedBracketID INT NOT NULL AUTO_INCREMENT,
+    MinIncome INT NOT NULL,
+    MaxIncome INT NOT NULL,
+    Percent SMALLINT NOT NULL,
+    PRIMARY KEY (BracketID)
+);
+
+CREATE TABLE IF NOT EXISTS ProjBudget(
+    BudgetID INT NOT NULL AUTO_INCREMENT,
+    UserID VARCHAR(40) NOT NULL,
+    Salary INT NOT NULL,
+    FedBracketID INT NOT NULL,
+    StateBracketID INT NOT NULL,
+    FOREIGN KEY(UserID) REFERENCES ProjUser,
+    FOREIGN KEY(FedBracketID) REFERENCES ProjFedTax,
+    FOREIGN KEY(StateBracketID) REFERENCES ProjStateTax,
+    PRIMARY KEY(BudgetID)
+);
+
+CREATE TABLE IF NOT EXISTS Split(
+    SplitID INT NOT NULL AUTO_INCREMENT,
+    BudgetID INT NOT NULL,
+    Name VARCHAR(40),
+    Percent SMALLINT NOT NULL,
+    FOREIGN KEY(BudgetID) REFERENCES ProjBudget,
+    PRIMARY KEY(SplitID)
+)
