@@ -1,4 +1,4 @@
-var dummyjson = require('dummy-json');
+//var dummyjson = require('dummy-json');
 var template_budget = '{\
     "salary" : 50000,\
     "state" : "North Carolina",\
@@ -19,6 +19,11 @@ var template_budget = '{\
     ]\
 }';
 
-var result = dummyjson.parse(template_budget);
-console.log(result);
+var budget = JSON.parse(template_budget);
+//console.log(result);
 
+//console.log(result.salary);
+//console.log(result.split.length);
+//console.log(budget.split);
+//console.log(budget.split[1]);
+//console.log(budget.split[1].name);
