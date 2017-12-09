@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS ProjFedTax(
     FedBracketID INT NOT NULL AUTO_INCREMENT,
     MinIncome INT NOT NULL,
     MaxIncome INT NOT NULL,
-    Percent SMALLINT NOT NULL,
+    Percent FLOAT NOT NULL,
     PRIMARY KEY (FedBracketID)
 );
 
