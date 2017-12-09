@@ -2,16 +2,19 @@
 <html lang='en-US'>
 <head>
 	<title>Budgie</title>
+	<script src="jquery-3.2.1.js"></script>
 	<link rel='stylesheet' type='text/css' href='Main.css'>
 	<link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=Sintony' rel='stylesheet'>
 </head>
 <body>
-	<div class='welcome'>
+	<div class='logo'>
 		<h1>Budgie</h1>
 	</div>
-	<div class = 'enter_info'>
-		<h2>Let's get started</h2>
-		<input type="text" placeholder = "Enter your yearly salary" required>
+
+	<div id = 'enter_info'>
+		<h2>Let's get started <var class='user_name'></var></h2>
+		<input id = 'new_user_salary' type="text" placeholder = "Enter your yearly salary" required>
 		<select id='selectstate' name = 'location' required>
 			<option value = 'Select your state'>Select your state</option>
 			<option value = 'Alabama'>Alabama</option>
@@ -65,15 +68,270 @@
 			<option value = 'Wisconsin'>Wisconsin</option>
 			<option value = 'Wyoming'>Wyoming</option>
 		</select>
-		<button onclick = 'myFunction()' type = "submit">Submit</button>
+		<button onclick = 'new_user()'>Start budgeting</button>
+		<div id='snackbar-new'></div>
 	</div>
-	<div class = 'main'>
-		<h3>After tax, your salary is <var id='salary'></var>.</h3>
+	<div id = 'main'>
+		<div id = 'line'></div>
+		<h2 id = 'welcome_user'>Welcome <var class = 'user_name'></var>!</h2>
+		<div id = 'user_box'>
+			<p>Current State:<br />
+			<var class='user_state'></var></p><!--Change to a location variable from database-->
+			<br>
+			<p>Current Salary:<br>
+				<var class = 'user_salary'></var></p>
+			<br>
+			<p>After Tax Salary:<br>
+				<var class = 'ats'></var>
+			</p>
+			<button id='edit_user_info' onclick = 'edit_user_info()'>Edit</button>
+			<button id='save_user_info' onclick = 'save_user_info()'>Save</button>
+		</div>
+		<table id='spending_table'>
+			<tr>
+			    <th>Expense</th>
+			    <th>%</th> 
+			    <th>$</th>
+			 </tr>
+			<tr id = 'add_row'>
+				<td><input id = 'new_expense' type="text" placeholder = "Enter a new expense"></td>
+				<td><input id = 'new_percent' type="text" placeholder = "% of budget"></td>
+				<td><button id = 'enter_new_expense' type = 'submit' onclick = 'enter_new_expense()'>Enter</button></td>
+			</tr>
+			<tfoot id = 'total'>
+   				<tr>
+				    <th>Total :</th>
+				    <th id = 'total_percent'>100</th>
+				    <th id = 'total_salary'><var class = 'ats'></var></th>
+				</tr>
+			</tfoot>
+		</table>
+		<button id = 'edit_table' onclick = 'edit_table_func()'><img src="https://image.flaticon.com/icons/png/512/52/52951.png" width='50px' height="50px"></button>
+		<button id = 'save_table' onclick = 'save_table_func()'><img src="https://png.icons8.com/?id=11695&size=280" width='50px' height="50px"></button>
+		<div id='snackbar-main'></div>
 	</div>
 	<script>
-		function myFunction() {
-    		var x = document.getElementById("salary");
-    		x.innerHTML = '$50,000';
+		var x = localStorage.getItem('gate');
+		var y = document.getElementById('enter_info');
+		var main = document.getElementById('main');
+
+		var user_name = 'Sam';/*replace with user first name*/
+		var user_location = 'Indiana';
+		var yearly_salary = 70000;/*replace with user yearly salary*/
+		var after_tax_salary = 50000;/*replace with user ats */
+
+		refresh_user_box();
+
+		var save_user = document.getElementById('save_user_info');
+		var save_table = document.getElementById('save_table');
+		var table = document.getElementById('spending_table');
+
+    	/*initially hide save table button and save user button*/
+    	save_table.style.display = 'none';
+		save_user.style.display = 'none';
+
+		/*if it is a new user, prompt them to enter in information*/
+		if (x==='SignUp'){
+			y.style.display = 'block';
+			main.style.display = 'none';
+		}
+		else{
+			y.style.display = 'none';
+			main.style.display = 'block';
+		}
+
+		function calc_total_p(){
+			var tperc = document.getElementById('total_percent');
+			var sum_percentages = document.getElementsByClassName('percent_cell');
+			var sum = 0;
+			for(j = 0; j < sum_percentages.length; j++){
+				sum = sum + parseInt(sum_percentages[j].innerHTML);
+			}
+			tperc.innerHTML = parseInt(sum);
+
+			if(tperc.innerHTML > 100){
+				var snack = document.getElementById('snackbar-main');
+				snack.className = 'show';
+				snack.innerHTML = 'Please adjust your percentages to equal 100';
+				setTimeout(function(){ snack.className = snack.className.replace("show", ""); }, 3000);
+				tperc.style.backgroundColor = '#dd5252';
+		   	}
+
+		   	if (tperc.innerHTML < 100){
+		   		var snack = document.getElementById('snackbar-main');
+				snack.className = 'show';
+				snack.innerHTML = 'Add more to your budget to reach 100%';
+				setTimeout(function(){ snack.className = snack.className.replace("show", ""); }, 3000);
+		   		tperc.style.backgroundColor = '#fffd89';
+		   	}
+
+		   	else{
+		   		tperc.style.backgroundColor = 'white';
+		   	}
+
+		}
+
+		function calc_total_d(){
+			var tsal = document.getElementById('total_salary');
+			var sum_dollars = document.getElementsByClassName('dollar_cell');
+			var sum = 0;
+			for(j = 0; j < sum_dollars.length; j++){
+				sum = sum + parseInt(sum_dollars[j].innerHTML.replace(/\$|,/g, ''));
+			}
+			tsal.innerHTML = '$'+parseInt(sum);
+
+		}
+
+		function new_user() {
+			var new_us = document.getElementById('new_user_salary').value;
+			var new_ul = document.getElementById('selectstate').value;
+
+			if (new_us == '' | new_ul == 'Select your state' | isNaN(new_us)){
+				var snack = document.getElementById('snackbar-new');
+				snack.className = 'show';
+				snack.innerHTML = 'Please enter in your yearly salary and current state';
+				setTimeout(function(){ snack.className = snack.className.replace("show", ""); }, 3000);
+			}
+
+			else {
+				yearly_salary = new_us;
+				user_location = new_ul;
+
+	    		main.style.display = 'block';
+	    		y.style.display = 'none';
+
+	    		refresh_user_box();
+			}
+		}
+
+		function refresh_user_box(){
+					/*set all user name fields to the first name of user*/
+			var user_divs = document.getElementsByClassName('user_name');
+			var i;
+			for (i = 0; i<user_divs.length; i++){
+				user_divs[i].innerHTML = user_name;
+			}
+
+			var location_divs = document.getElementsByClassName('user_state');
+			var h;
+			for (h = 0; h<location_divs.length; h++){
+				location_divs[h].innerHTML = user_location;
+			}
+
+			/*set user's yearly salary in all applicable locations*/
+			var year_salary_divs = document.getElementsByClassName('user_salary');
+			var j;
+			for (j = 0; j<year_salary_divs.length; j++){
+				year_salary_divs[j].innerHTML = '$' + yearly_salary;
+			}
+
+			/*set user's after tax salary(ats)*/
+			var after_tax_salary_divs = document.getElementsByClassName('ats');
+			var k;
+			for (k = 0; k<after_tax_salary_divs.length; k++){
+				after_tax_salary_divs[k].innerHTML = '$' + after_tax_salary;
+			}
+		}
+
+		function edit_user_info(){
+			var state = document.getElementsByClassName('user_state')[0];
+			var edit_salary = document.getElementsByClassName('user_salary')[0];
+			var edit_button = document.getElementById('edit_user_info');
+			state.contentEditable = 'true';
+			state.style.fontStyle = 'italic';
+			edit_salary.contentEditable = 'true';
+			edit_salary.style.fontStyle = 'italic';
+			edit_button.style.display = 'none';
+			save_user.style.display = 'block';
+		}
+
+		function save_user_info(){
+			var state = document.getElementsByClassName('user_state')[0];
+			var edit_salary = document.getElementsByClassName('user_salary')[0];
+			var edit_button = document.getElementById('edit_user_info');
+			state.contentEditable = 'false';
+			state.style.fontStyle = 'normal';
+			edit_salary.contentEditable = 'false';
+			edit_salary.style.fontStyle = 'normal';
+			edit_button.style.display = 'block';
+			save_user.style.display = 'none';
+		}
+
+		function edit_table_func(){
+			var expense_entries = document.getElementsByClassName('expense_cell');
+			var percent_entries = document.getElementsByClassName('percent_cell');
+			var i;
+			for (i = 0; i < expense_entries.length; i++){
+				expense_entries[i].contentEditable = 'true';
+				percent_entries[i].contentEditable = 'true';
+				expense_entries[i].style.fontStyle = 'italic';
+				percent_entries[i].style.fontStyle = 'italic';
+			}
+			document.getElementById('edit_table').style.display = 'none';
+			document.getElementById('save_table').style.display = 'inline-block';
+
+		}
+
+		function save_table_func(){
+			var expense_entries = document.getElementsByClassName('expense_cell');
+			var percent_entries = document.getElementsByClassName('percent_cell');
+			var i;
+			for (i = 0; i < expense_entries.length; i++){
+				expense_entries[i].contentEditable = 'false';
+				percent_entries[i].contentEditable = 'false';
+				expense_entries[i].style.fontStyle = 'normal';
+				percent_entries[i].style.fontStyle = 'normal';
+			}
+			document.getElementById('edit_table').style.display = 'inline-block';
+			document.getElementById('save_table').style.display = 'none';
+
+			calc_total_p();
+			calc_total_d();
+		}
+
+		function enter_new_expense(){
+			var e = document.getElementById('new_expense').value;
+			var p = document.getElementById('new_percent').value;
+
+			if(e == ''){
+				var snack = document.getElementById('snackbar-main');
+				snack.className = 'show';
+				snack.innerHTML = 'Please enter an expense';
+				setTimeout(function(){ snack.className = snack.className.replace("show", ""); }, 3000);
+			}
+
+			if(p == '' | isNaN(p)){
+				var snack = document.getElementById('snackbar-main');
+				snack.className = 'show';
+				snack.innerHTML = 'Please enter a number as a percentage';
+				setTimeout(function(){ snack.className = snack.className.replace("show", ""); }, 3000);
+			}
+
+			else{
+				var new_row = document.createElement("tr");
+				var row_cell_e = document.createElement("td");
+				row_cell_e.innerHTML = e;
+				row_cell_e.className = 'expense_cell';
+				var row_cell_p = document.createElement("td");
+				row_cell_p.innerHTML = parseInt(p, 10);
+				row_cell_p.className = 'percent_cell';
+				var row_cell_d = document.createElement("td");
+				row_cell_d.innerHTML = '$'+after_tax_salary*parseInt(p)/100;
+				row_cell_d.className = 'dollar_cell';
+				var bottom_row = document.getElementById('add_row');
+				new_row.append(row_cell_e);
+				new_row.append(row_cell_p);
+				new_row.append(row_cell_d);
+				bottom_row.parentNode.insertBefore(new_row, bottom_row);
+
+				document.getElementById('new_expense').value = "";
+				document.getElementById('new_percent').value = "";
+
+				calc_total_p();
+				calc_total_d();
+			}
+
+			//save data to expense table for user
 		}
 	</script>
 </body>

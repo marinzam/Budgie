@@ -7,7 +7,6 @@ h1 {
 }
 
 h2{
-	font-family: 'Comfortaa'; 
 	font-size: 30px;
 	padding: 15px;
 	color: #112C5F;
@@ -15,6 +14,7 @@ h2{
 
 *{
 	box-sizing: border-box;
+	font-family: 'Sintony';
 }
 
 body {
@@ -23,11 +23,20 @@ body {
 }
 
 a {
-  text-decoration: none;
-  color: #1ab188;
+    background-color: #112C5F;
+    text-decoration: none;
+    color: white;
+    display: block;
+    padding: 14px 20px;
+    margin: 8px auto;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    width: 70%;
+    outline: none;
 }
 a:hover {
-  color: #179b77;
+	opacity: 0.8;
 }
 
 .form{
