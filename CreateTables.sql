@@ -2,6 +2,8 @@ CREATE TABLE IF NOT EXISTS ProjUser(
     UserID VARCHAR(40) NOT NULL,
     HashedPassword VARCHAR(255) NOT NULL,
     Salt VARCHAR(10) NOT NULL,
+    FirstName VARCHAR(40) NOT NULL,
+    LastName VARCHAR(40) NOT NULL,
     PRIMARY KEY (UserID)
 );
 
