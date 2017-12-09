@@ -1,7 +1,6 @@
 <?php
 $data = json_decode(file_get_contents('php://input'));
 $db = new mysqli("classroom.cs.unc.edu", "kjbass", "426password!", "kjbassdb");
-mysqli_report(MYSQLI_REPORT_ALL);
 
 $stmt = $db->prepare('SELECT * FROM ProjUser u WHERE u.UserID=?;');
 $userID = $data->{"UserID"};
