@@ -11,6 +11,7 @@ if($result->num_rows === 0){
     // userID not in DB
     $response = (object) ['error' => 'Username Does Not Exist'];
     echo json_encode($response);
+    http_response_code(401);
     return;
 } else {
     $result = $result->fetch_assoc();
@@ -23,6 +24,8 @@ if($result->num_rows === 0){
     } else {
         $response = (object) ['error' => 'Password Incorrect'];
         echo(json_encode($response));
+        http_response_code(401);
+        return;
     }
 }
 ?>
