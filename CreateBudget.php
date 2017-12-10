@@ -1,5 +1,6 @@
 <?php
 session_start();
+require __DIR__ . '/AuxFunctions.php';
 $data = json_decode(file_get_contents('php://input'));
 if(!isset($_SESSION['userID'])){
     header("Location: http://www.google.com/");
@@ -47,11 +48,8 @@ insertSplit($budgetID, "Goals", 20, $db);
 insertSplit($budgetID, "Wants", 30, $db);
 
 
-function insertSplit($budgetID, $name, $percent, $db){
-    $stmt = $db->prepare('INSERT INTO ProjSplit(BudgetID, Name, Percent) VALUES(?,?,?);
-    ');
-    $stmt->bind_param('isi', $budgetID, $name, $percent);
-    $stmt->execute();
-}
+
+
+
 
 ?>
