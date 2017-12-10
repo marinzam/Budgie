@@ -152,6 +152,23 @@ button#save_user_info:hover{
   opacity: 1.0;
 }
 
+button#logout{
+  display: inline-block;
+  float: right;
+  margin-right: 10%;
+  margin-top: 53px;
+  width: 100px;
+  border-style: solid;
+  border-color: white;
+  padding: 10px;
+  background-color: transparent;
+}
+
+button#logout:hover{
+  background-color: #112C5F;
+  opacity: 1.0;
+}
+
 button#edit_table{
   border-radius: 60%;
   width: 50px;

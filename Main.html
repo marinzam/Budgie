@@ -75,6 +75,7 @@
 	</div>
 	<div id = 'main'>
 		<div id = 'line'></div>
+		<button id = 'logout' onclick = 'logout_user()'>Log Out</button>
 		<h2 id = 'welcome_user'>Welcome <var class = 'user_name'></var>!</h2>
 		<div id = 'user_box'>
 			<p>Current State:<br />
@@ -333,6 +334,10 @@
 				calc_total_d();
 			}
 			//save data to expense table for user
+		}
+
+		function logout_user(){
+			/*save budget information, then redirect to login.html*/
 		}
 	</script>
 </body>
