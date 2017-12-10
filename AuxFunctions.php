@@ -64,23 +64,22 @@ class Budget
     public function constructJSON($data) {
         foreach ($data as $key => $value) $this->{$key} = $value;
     }
-    public function equals($otherBudget){
+    public function getDiff($otherBudget){
         if(count($otherBudget->split) !== count($this->split)){
-            echo(count($otherBudget->split));
-            echo(count($this->split));
-            return false;
+            return NULL;
         }
         $splitSize = count($this->split);
+        $differences = [];
         for ($i = 0; $i < $splitSize; $i++) {
             $thisSplit = $this->split[$i];
             $otherSplit = $otherBudget->split[$i];
-            if($thisSplit->name !== $otherSplit->name ||
-                $thisSplit->percentage !== $otherSplit->percentage
+            if($thisSplit->name != $otherSplit->name ||
+                $thisSplit->percentage != $otherSplit->percentage
             ){
-                return false;
+                $differences[] = $thisSplit;
             }
         }
-        return true;
+        return $differences;
     }
 }
 

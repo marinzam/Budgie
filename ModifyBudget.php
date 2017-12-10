@@ -12,17 +12,20 @@ $budget = new Budget(NULL,NULL,NULL,NULL);
 $budget->constructJSON($data);
 $budgetID = getBudgetID($db, $userID);
 $savedBudget = getBudget($budgetID, $db);
-
-
-
-
-
-
-
-
-
-
-
-
-echo json_encode($budget->equals($savedBudget));
+$difference = $budget->getDiff($savedBudget);
+if(is_null($difference)){
+    echo json_encode($budget);
+    return;
+}
+//delete splits for old split
+$stmt = $db->prepare("DELETE 
+                        FROM ProjSplit
+                        WHERE BudgetID=?;
+");
+$stmt->bind_param("i", $budgetID);
+$stmt->execute();
+foreach ($difference as $key => $split){
+    insertSplit($budgetID, $split->name, $split->percentage, $db);
+}
+echo json_encode(getBudget($budgetID, $db));
 ?>
