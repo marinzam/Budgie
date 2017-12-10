@@ -35,6 +35,19 @@ function getBudget($budgetID, $db){
     return new Budget($salary, $state, $afterTaxSalary, $split);
 }
 
+function getBudgetID($db, $userID){
+$stmt = $db->prepare('SELECT BudgetID 
+    FROM ProjBudget b
+    WHERE b.UserID = ?;
+');
+$stmt->bind_param('s', $userID);
+$stmt->execute();
+$result = $stmt->get_result();
+$result = $result->fetch_assoc();
+$budgetID = $result['BudgetID'];
+return $budgetID;
+}
+
 
 class Budget
 {
@@ -47,6 +60,26 @@ class Budget
         $this->state = $stat;
         $this->afterTaxSalary = (int)$afterTax;
         $this->split = $splt;
+    }
+    public function constructJSON($data) {
+        foreach ($data as $key => $value) $this->{$key} = $value;
+    }
+    public function getDiff($otherBudget){
+        if(count($otherBudget->split) !== count($this->split)){
+            return NULL;
+        }
+        $splitSize = count($this->split);
+        $differences = [];
+        for ($i = 0; $i < $splitSize; $i++) {
+            $thisSplit = $this->split[$i];
+            $otherSplit = $otherBudget->split[$i];
+            if($thisSplit->name != $otherSplit->name ||
+                $thisSplit->percentage != $otherSplit->percentage
+            ){
+                $differences[] = $thisSplit;
+            }
+        }
+        return $differences;
     }
 }
 
