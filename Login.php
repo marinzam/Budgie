@@ -1,4 +1,5 @@
 <?php
+session_start();
 $data = json_decode(file_get_contents('php://input'));
 $db = new mysqli("classroom.cs.unc.edu", "kjbass", "426password!", "kjbassdb");
 
@@ -20,6 +21,7 @@ if($result->num_rows === 0){
     $HashedPassword = $result["HashedPassword"];
     $SubmittedPassword = hash('md5', $data->{'Password'}.$salt);
     if($HashedPassword === $SubmittedPassword){
+        $_SESSION['userID'] = $userID;
         return;
     } else {
         $response = (object) ['error' => 'Password Incorrect'];
@@ -27,5 +29,6 @@ if($result->num_rows === 0){
         http_response_code(401);
         return;
     }
+    
 }
 ?>
