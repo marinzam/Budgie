@@ -149,6 +149,7 @@
 
 		function calc_total_p(){
 			var sum_percentages = document.getElementsByClassName('percent_cell');
+			var labels = document.getElementsByClassName('expense_cell');
 			var sum = 0;
 			for(j = 0; j < sum_percentages.length; j++){
 				sum = sum + parseInt(sum_percentages[j].innerHTML);
@@ -323,29 +324,36 @@
 			}
 
 			else{
-				var new_row = document.createElement("tr");
-				var row_cell_e = document.createElement("td");
-				row_cell_e.innerHTML = e;
-				row_cell_e.className = 'expense_cell';
-				var row_cell_p = document.createElement("td");
-				row_cell_p.innerHTML = parseInt(p, 10);
-				row_cell_p.className = 'percent_cell';
-				var row_cell_d = document.createElement("td");
-				row_cell_d.innerHTML = '$'+after_tax_salary*parseInt(p)/100;
-				row_cell_d.className = 'dollar_cell';
-				var bottom_row = document.getElementById('add_row');
-				new_row.append(row_cell_e);
-				new_row.append(row_cell_p);
-				new_row.append(row_cell_d);
-				bottom_row.parentNode.insertBefore(new_row, bottom_row);
-
-				document.getElementById('new_expense').value = "";
-				document.getElementById('new_percent').value = "";
-
-				calc_total_p();
-				calc_total_d();
+				add_expense_row();
 			}
 			//save data to expense table for user
+		}
+
+		function add_expense_row(){
+			var e = document.getElementById('new_expense').value;
+			var p = document.getElementById('new_percent').value;
+
+			var new_row = document.createElement("tr");
+			var row_cell_e = document.createElement("td");
+			row_cell_e.innerHTML = e;
+			row_cell_e.className = 'expense_cell';
+			var row_cell_p = document.createElement("td");
+			row_cell_p.innerHTML = parseInt(p, 10);
+			row_cell_p.className = 'percent_cell';
+			var row_cell_d = document.createElement("td");
+			row_cell_d.innerHTML = '$'+after_tax_salary*parseInt(p)/100;
+			row_cell_d.className = 'dollar_cell';
+			var bottom_row = document.getElementById('add_row');
+			new_row.append(row_cell_e);
+			new_row.append(row_cell_p);
+			new_row.append(row_cell_d);
+			bottom_row.parentNode.insertBefore(new_row, bottom_row);
+
+			document.getElementById('new_expense').value = "";
+			document.getElementById('new_percent').value = "";
+
+			calc_total_p();
+			calc_total_d();
 		}
 
 		function logout_user(){
