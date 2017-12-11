@@ -2,37 +2,35 @@
 $(document).ready(function () {
 
     var url_base = "https://wwwp.cs.unc.edu/Courses/comp426-f17/users/kjbass/Budgie/";
-    document.getElementById('login_button').on('click',
+    $('#login_button').on('click',
     function (e) {
         e.preventDefault();
-        var myUserID = document.getElementById("input_email_login").value;
-        var myPassword = document.getElementById("input_password_login").value;
+
         $.ajax(url_base + "/Login.php",
             {type: "POST",
             dataType: "json",
-            data: {
-                UserID : myUserID,
-                Password: myPassword },
+            data: JSON.Stringify({
+                UserID: $("#input_email_login").val(),
+                Password: $("#input_password_login").val()
+            }),
             success:
             //redirect to Main.html to load budget info into tables
             });
     });
 
-    document.getElementById('#signup_button').on('click',
+    $('#signup_button').on('click',
     function (e) {
         e.preventDefault();
-        var myFirstName = document.getElementById("input_first_name").value;
-        var myLastName = document.getElementById("input_last_name").value;
-        var myUserID = document.getElementById("input_email_signup").value;
-        var myPassword = document.getElementById("input_password_signup").value;
+
         $.ajax(url_base + "/CreateUser.php",
             {type: "POST",
             dataType: "json",
-            data: {
-                FirstName : myFirstName,
-                LastName: myLastName,
-                UserID: myUserID,
-                Password: myPassword },
+            data: JSON.Stringify({
+                FirstName : $("#input_first_name").val(),
+                LastName: $("#input_last_name").val(),
+                UserID: $("#input_email_signup").val(),
+                Password: $("#input_password_signup").val()
+            }),
             success:
             //redirect to Main.html to create a budget
             });
