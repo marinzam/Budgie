@@ -87,11 +87,11 @@
 			<p>After Tax Salary:<br>
 				<var class = 'ats'></var>
 			</p>
-			<button id='edit_user_info' onclick = 'edit_user_info()'>Edit</button>
-			<button id='save_user_info' onclick = 'save_user_info()'>Save</button>
+			<!--<button id='edit_user_info' onclick = 'edit_user_info()'>Edit</button>-->
+			<!--<button id='save_user_info' onclick = 'save_user_info()'>Save</button>-->
 		</div>
 		<table id='spending_table'>
-			<tr>
+			<tr id = 'headers'>
 			    <th>Expense</th>
 			    <th>%</th> 
 			    <th>$</th>
@@ -125,13 +125,13 @@
 
 		refresh_user_box();
 
-		var save_user = document.getElementById('save_user_info');
+		//var save_user = document.getElementById('save_user_info');
 		var save_table = document.getElementById('save_table');
 		var table = document.getElementById('spending_table');
 
     	/*initially hide save table button and save user button*/
     	save_table.style.display = 'none';
-		save_user.style.display = 'none';
+		//save_user.style.display = 'none';
 
 		/*if it is a new user, prompt them to enter in information*/
 		if (x==='SignUp'){
@@ -236,7 +236,7 @@
 			}
 		}
 
-		function edit_user_info(){
+		/*function edit_user_info(){
 			var state = document.getElementsByClassName('user_state')[0];
 			var edit_salary = document.getElementsByClassName('user_salary')[0];
 			var edit_button = document.getElementById('edit_user_info');
@@ -258,17 +258,26 @@
 			edit_salary.style.fontStyle = 'normal';
 			edit_button.style.display = 'block';
 			save_user.style.display = 'none';
-		}
+		}*/
 
 		function edit_table_func(){
 			var expense_entries = document.getElementsByClassName('expense_cell');
 			var percent_entries = document.getElementsByClassName('percent_cell');
+			var dollar_entries = document.getElementsByClassName('dollar_cell');
 			var i;
 			for (i = 0; i < expense_entries.length; i++){
 				expense_entries[i].contentEditable = 'true';
 				percent_entries[i].contentEditable = 'true';
 				expense_entries[i].style.fontStyle = 'italic';
 				percent_entries[i].style.fontStyle = 'italic';
+				dollar_entries[i].innerHTML = '';
+
+				var delete_button = document.createElement('button');
+				delete_button.innerHTML = 'Delete';
+				delete_button.className = 'delete_row';
+				delete_button.onclick = function(){remove_row(this)};
+				dollar_entries[i].append(delete_button);
+
 			}
 			document.getElementById('edit_table').style.display = 'none';
 			document.getElementById('save_table').style.display = 'inline-block';
@@ -278,12 +287,16 @@
 		function save_table_func(){
 			var expense_entries = document.getElementsByClassName('expense_cell');
 			var percent_entries = document.getElementsByClassName('percent_cell');
+			var dollar_entries = document.getElementsByClassName('dollar_cell');
 			var i;
 			for (i = 0; i < expense_entries.length; i++){
 				expense_entries[i].contentEditable = 'false';
 				percent_entries[i].contentEditable = 'false';
 				expense_entries[i].style.fontStyle = 'normal';
 				percent_entries[i].style.fontStyle = 'normal';
+				dollar_entries[i].innerHTML = '$'+ after_tax_salary*percent_entries[i].innerHTML/100;
+
+				dollar_entries[i].removeChild(dollar_entries[i].childNodes[1]);
 			}
 			document.getElementById('edit_table').style.display = 'inline-block';
 			document.getElementById('save_table').style.display = 'none';
@@ -339,6 +352,11 @@
 
 		function logout_user(){
 			/*save budget information, then redirect to login.html*/
+		}
+
+		function remove_row(r){
+			var i = r.parentNode.parentNode.rowIndex;
+			document.getElementById('spending_table').deleteRow(i);
 		}
 	</script>
 	<div>
