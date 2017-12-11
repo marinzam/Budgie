@@ -9,5 +9,5 @@ $userID = $_SESSION['userID'];
 $budgetID = getBudgetID($db, $userID);
 
 
-echo json_encode(getBudget($budgetID, $db));
+echo json_encode(getBudget($budgetID, $userID, $db));
 ?>

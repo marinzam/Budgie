@@ -6,7 +6,7 @@ function insertSplit($budgetID, $name, $percent, $db){
     $stmt->execute();
 }
 
-function getBudget($budgetID, $db){
+function getBudget($budgetID, $userID, $db){
    $stmt = $db->prepare("Select B.Salary, S.StateID, B.Salary-(B.Salary*S.Percent*F.Percent) as AfterTax
                             FROM ProjBudget B, ProjFedTax F, ProjStateTax S
                             WHERE B.BudgetID=?
@@ -20,6 +20,7 @@ function getBudget($budgetID, $db){
     $salary = $result["Salary"];
     $state = $result["StateID"];
     $afterTaxSalary = $result["AfterTax"];
+    $name = getFirstName($db, $userID);
     $split = [];
     $stmt = $db->prepare("SELECT S.Name, S.Percent
                             FROM ProjSplit S
@@ -32,7 +33,7 @@ function getBudget($budgetID, $db){
         $split[] = new Split($row['Name'], $row['Percent']);
     }
     
-    return new Budget($salary, $state, $afterTaxSalary, $split);
+    return new Budget($salary, $state, $afterTaxSalary, $split, $name);
 }
 
 function getBudgetID($db, $userID){
@@ -48,6 +49,18 @@ $budgetID = $result['BudgetID'];
 return $budgetID;
 }
 
+function getFirstName($db, $userID){
+    $stmt = $db->prepare('SELECT  FirstName
+    FROM ProjUser u
+    WHERE u.UserID = ?;
+');
+$stmt->bind_param('s', $userID);
+$stmt->execute();
+$result = $stmt->get_result();
+$result = $result->fetch_assoc();
+$userID = $result['FirstName'];
+return $userID;
+}
 
 class Budget
 {
@@ -55,11 +68,13 @@ class Budget
     var $state;
     var $afterTaxSalary;
     var $split;
-    function __construct($sal, $stat, $afterTax, $splt){
+    var $name;
+    function __construct($sal, $stat, $afterTax, $splt, $name){
         $this->salary = $sal;
         $this->state = $stat;
         $this->afterTaxSalary = (int)$afterTax;
         $this->split = $splt;
+        $this->name = $name;
     }
     public function constructJSON($data) {
         foreach ($data as $key => $value) $this->{$key} = $value;

@@ -47,7 +47,7 @@ insertSplit($budgetID, "Necessities", 50, $db);
 insertSplit($budgetID, "Goals", 20, $db);
 insertSplit($budgetID, "Wants", 30, $db);
 
-echo json_encode(getBudget($budgetID, $db));
+echo json_encode(getBudget($budgetID, $userID, $db));
 
 
 
