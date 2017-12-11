@@ -128,6 +128,7 @@
 		//var save_user = document.getElementById('save_user_info');
 		var save_table = document.getElementById('save_table');
 		var table = document.getElementById('spending_table');
+		var tperc = document.getElementById('total_percent');
 
     	/*initially hide save table button and save user button*/
     	save_table.style.display = 'none';
@@ -147,7 +148,6 @@
 		}
 
 		function calc_total_p(){
-			var tperc = document.getElementById('total_percent');
 			var sum_percentages = document.getElementsByClassName('percent_cell');
 			var sum = 0;
 			for(j = 0; j < sum_percentages.length; j++){
@@ -179,12 +179,7 @@
 
 		function calc_total_d(){
 			var tsal = document.getElementById('total_salary');
-			var sum_dollars = document.getElementsByClassName('dollar_cell');
-			var sum = 0;
-			for(j = 0; j < sum_dollars.length; j++){
-				sum = sum + parseInt(sum_dollars[j].innerHTML.replace(/\$|,/g, ''));
-			}
-			tsal.innerHTML = '$'+parseInt(sum);
+			tsal.innerHTML = '$'+after_tax_salary*parseInt(tperc.innerHTML)/100;
 
 		}
 
@@ -360,6 +355,9 @@
 		function remove_row(r){
 			var i = r.parentNode.parentNode.rowIndex;
 			document.getElementById('spending_table').deleteRow(i);
+
+			calc_total_p();
+			calc_total_d();
 		}
 	</script>
 </body>
