@@ -1,7 +1,7 @@
 $(document).ready(function () {
 alert("Hello World");   // Does not work
 
-    var url_base = "https://wwwp.cs.unc.edu/Courses/comp426-f17/users/kjbass/proj/Budgie/";
+    var url_base = "https://wwwp.cs.unc.edu/Courses/comp426-f17/users/marinzam/Budgie/";
 
 // NEW USER CREATE BUDGET
     $('#start_budget_button').on('click',
