@@ -4,7 +4,7 @@ $data = json_decode(file_get_contents('php://input'));
 include("AuxFunctions.php");
 $db = new mysqli("classroom.cs.unc.edu", "kjbass", "426password!", "kjbassdb");
 if(!isset($_SESSION['userID'])){
-    header("Location: http://www.google.com/");
+    header("Location: ./Login.html");
 }
 $userID = $_SESSION['userID']; 
 
