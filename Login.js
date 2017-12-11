@@ -1,7 +1,7 @@
 // Javscript communication with PHP
 $(document).ready(function () {
 
-    var url_base = "https://wwwp.cs.unc.edu/Courses/comp426-f17/users/kjbass/Budgie/";
+    var url_base = "https://wwwp.cs.unc.edu/Courses/comp426-f17/users/kjbass/proj/Budgie/";
     $('#login_button').on('click',
     function (e) {
         e.preventDefault();
