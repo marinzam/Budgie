@@ -1,5 +1,5 @@
 $(document).ready(function () {
-alert("Hello World");   // Does not work
+alert("Hello World! main");
 
     var url_base = "https://wwwp.cs.unc.edu/Courses/comp426-f17/users/marinzam/Budgie/";
 
@@ -11,12 +11,12 @@ alert("Hello World");   // Does not work
         $.ajax(url_base + "/CreateBudget.php",
             {type: "GET",
             dataType: "json",
-            data: JSON.Stringify({
+            data: JSON.stringify({
                 StateID: $("#selectstate").val(),
                 Salary: $("#new_user_salary").val()
             }),
             success: function(response) {
-                var budget = JSON.parse(response);
+                var budget = response;
                 var myState = budget['state'];
                 var mySalary = budget['salary'];
                 var myAfterTaxSalary = budget['afterTaxSalary'];
@@ -35,27 +35,27 @@ alert("Hello World");   // Does not work
 
 // EXISTING USER GET BUDGET
 // if X != SignUp
-    $.ajax(url_base + "/GetBudget.php",
-        {type: "GET",
-        dataType: "json",
-        success: function(response) {
-            console.log(response);
-            var budget = JSON.parse(response);
-            var myFirstName = budget['name'];
-            var myState = budget['state'];
-            var mySalary = budget['salary'];
-            var myAfterTaxSalary = budget['afterTaxSalary'];
-            // populate table
-            for(var i=0; i<budget.split.length; i++){
-                var e = budget.split[i].name;
-                var p = budget.split[i].percentage;
-                enter_into_table(e,p);
-            }
-        },
-        error: function(response) {
-            console.log(response);
-        }
-    }); // get budget
+    // $.ajax(url_base + "/GetBudget.php",
+    //     {type: "GET",
+    //     dataType: "json",
+    //     success: function(response) {
+    //         console.log(response);
+    //         var budget = response;
+    //         var myFirstName = budget['name'];
+    //         var myState = budget['state'];
+    //         var mySalary = budget['salary'];
+    //         var myAfterTaxSalary = budget['afterTaxSalary'];
+    //         // populate table
+    //         for(var i=0; i<budget.split.length; i++){
+    //             var e = budget.split[i].name;
+    //             var p = budget.split[i].percentage;
+    //             enter_into_table(e,p);
+    //         }
+    //     },
+    //     error: function(response) {
+    //         console.log(response);
+    //     }
+    // }); // get budget
 
 // EDIT TABLE SAVE CHANGES
 
