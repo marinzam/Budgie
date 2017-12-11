@@ -2,8 +2,10 @@
 <html lang='en-US'>
 <head>
 	<title>Budgie</title>
-	<script src="jquery-3.2.1.js"></script>
+	 <meta charset="UTF-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<link rel='stylesheet' type='text/css' href='Login.css'>
+	<script type="text/javascript" src="Login.js"></script>
 	<link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
 	<link href='https://fonts.googleapis.com/css?family=Sintony' rel='stylesheet'>
 </head>
@@ -16,36 +18,36 @@
 			<button class = "tablink" onclick = "openOption('login', this, '#112C5F')" id = "defaultOpen">Login</button>
 			<button class = "tablink" onclick = "openOption('signup', this, '#112C5F')">Sign Up</button>
 		</div>
-		<div id="container">   
+		<div id="container">
 			<div id = "login" class = "tabcontent">
 	        	<h2>Welcome Back!</h2>
-	          
+
 	        	<form action="/" method="post">
-	        
-	        		<input type="email" placeholder = "Enter Email" name = 'user_email' required>
-	         	          
-	        		<input type="password" placeholder = "Enter Password" name = "psw" required>
+
+	        		<input id = 'input_email_login' type="email" placeholder = "Enter Email" name = 'user_email' required>
+
+	        		<input id = 'input_password_login' type="password" placeholder = "Enter Password" name = "psw" required>
 
 	        		<button id = 'login_button'>Login</button>
-	          
+
 	        	</form>
 	      	</div>
 
 	      	<div id = "signup" class = "tabcontent">
 		      	<h2>Sign Up</h2>
-	          
+
 	          	<form action="/" method="post">
-	         
-	            <input type="text" placeholder = "First Name" required>
 
-	            <input type="text" placeholder = "Last Name" required>
+	            <input id = 'input_first_name' type="text" placeholder = "First Name" required>
 
-	            <input type="email" placeholder = "Email" required>
+	            <input id = 'input_last_name' type="text" placeholder = "Last Name" required>
 
-	            <input type="password" placeholder = "Create a password" required>
-	          
+	            <input id = 'input_email_signup' type="email" placeholder = "Email" required>
+
+	            <input id = 'input_password_signup' type="password" placeholder = "Create a password" required>
+
 	          	<button id = "signup_button">Get Started</button>
-	          
+
 	          	</form>
 	      	</div>
 
@@ -81,6 +83,7 @@
 		document.getElementById("signup_button").onclick = function(){
 			location.href = "Main.html";
 			localStorage.setItem('gate', 'SignUp');
+			localStorage.setItem('first_name', document.getElementById("input_first_name"));
 		}
 
 		document.getElementById("login_button").onclick = function(){
