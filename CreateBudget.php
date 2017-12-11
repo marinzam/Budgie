@@ -3,7 +3,7 @@ session_start();
 require __DIR__ . '/AuxFunctions.php';
 $data = json_decode(file_get_contents('php://input'));
 if(!isset($_SESSION['userID'])){
-    header("Location: http://www.google.com/");
+    header("Location: ./Login.html");
 }
 $userID = $_SESSION['userID'];
 $state = $data->{"StateID"};
