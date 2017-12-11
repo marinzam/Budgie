@@ -70,7 +70,7 @@
 			<option value = 'WI'>WI</option>
 			<option value = 'WY'>WY</option>
 		</select>
-		<button onclick = 'new_user()'>Start budgeting</button>
+		<button id = 'start_budget_button' onclick = 'new_user()'>Start budgeting</button>
 		<div id='snackbar-new'></div>
 	</div>
 	<div id = 'main'>
@@ -118,7 +118,7 @@
 		var y = document.getElementById('enter_info');
 		var main = document.getElementById('main');
 
-		var user_name = 'Sam';/*replace with user first name*/
+		var user_name = 'Sam'; /*replace with user first name*/
 		var user_location = 'Indiana';
 		var yearly_salary = 70000;/*replace with user yearly salary*/
 		var after_tax_salary = 50000;/*replace with user ats */
@@ -135,12 +135,15 @@
 
 		/*if it is a new user, prompt them to enter in information*/
 		if (x==='SignUp'){
+			var user_name = localStorage.getItem('first_name');
 			y.style.display = 'block';
 			main.style.display = 'none';
+			/* CreateBudget.php */
 		}
 		else{
 			y.style.display = 'none';
 			main.style.display = 'block';
+			/* GetBudget.php */
 		}
 
 		function calc_total_p(){
@@ -204,6 +207,7 @@
 	    		y.style.display = 'none';
 
 	    		refresh_user_box();
+
 			}
 		}
 

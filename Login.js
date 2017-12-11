@@ -13,10 +13,13 @@ $(document).ready(function () {
                 UserID: $("#input_email_login").val(),
                 Password: $("#input_password_login").val()
             }),
-            success:
-            //redirect to Main.html to load budget info into tables
-            });
-    });
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(response) {
+                console.log(response);
+            }});
+    }); //login button push
 
     $('#signup_button').on('click',
     function (e) {
@@ -31,8 +34,12 @@ $(document).ready(function () {
                 UserID: $("#input_email_signup").val(),
                 Password: $("#input_password_signup").val()
             }),
-            success:
-            //redirect to Main.html to create a budget
-            });
-    });
-});
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(response) {
+                console.log(response);
+            }});
+    }); //signup button push
+
+}); //doc ready

@@ -1,0 +1,5 @@
+next commit:
+added first name to local storage if new user in Login html
+retrieve first name if gate = signup
+
+name, salary, state, etc will have to be pulled from DB
