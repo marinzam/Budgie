@@ -8,10 +8,10 @@ if(!isset($_SESSION['userID'])){
 }
 $userID = $_SESSION['userID']; 
 
-$budget = new Budget(NULL,NULL,NULL,NULL);
+$budget = new Budget(NULL,NULL,NULL,NULL, NULL);
 $budget->constructJSON($data);
 $budgetID = getBudgetID($db, $userID);
-$savedBudget = getBudget($budgetID, $db);
+$savedBudget = getBudget($budgetID, $userID, $db);
 $difference = $budget->getDiff($savedBudget);
 if(is_null($difference)){
     echo json_encode($budget);
@@ -27,5 +27,5 @@ $stmt->execute();
 foreach ($difference as $key => $split){
     insertSplit($budgetID, $split->name, $split->percentage, $db);
 }
-echo json_encode(getBudget($budgetID, $db));
+echo json_encode(getBudget($budgetID, $userID, $db));
 ?>
