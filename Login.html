@@ -4,6 +4,7 @@
 	<title>Budgie</title>
 	<script src="jquery-3.2.1.js"></script>
 	<link rel='stylesheet' type='text/css' href='Login.css'>
+	<script type="text/javascript" src="Login.js"></script>
 	<link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
 	<link href='https://fonts.googleapis.com/css?family=Sintony' rel='stylesheet'>
 </head>
@@ -16,26 +17,26 @@
 			<button class = "tablink" onclick = "openOption('login', this, '#112C5F')" id = "defaultOpen">Login</button>
 			<button class = "tablink" onclick = "openOption('signup', this, '#112C5F')">Sign Up</button>
 		</div>
-		<div id="container">   
+		<div id="container">
 			<div id = "login" class = "tabcontent">
 	        	<h2>Welcome Back!</h2>
-	          
+
 	        	<form action="/" method="post">
-	        
+
 	        		<input type="email" placeholder = "Enter Email" name = 'user_email' required>
-	         	          
+
 	        		<input type="password" placeholder = "Enter Password" name = "psw" required>
 
 	        		<button id = 'login_button'>Login</button>
-	          
+
 	        	</form>
 	      	</div>
 
 	      	<div id = "signup" class = "tabcontent">
 		      	<h2>Sign Up</h2>
-	          
+
 	          	<form action="/" method="post">
-	         
+
 	            <input type="text" placeholder = "First Name" required>
 
 	            <input type="text" placeholder = "Last Name" required>
@@ -43,9 +44,9 @@
 	            <input type="email" placeholder = "Email" required>
 
 	            <input type="password" placeholder = "Create a password" required>
-	          
+
 	          	<button id = "signup_button">Get Started</button>
-	          
+
 	          	</form>
 	      	</div>
 
