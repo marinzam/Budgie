@@ -176,7 +176,7 @@ button#edit_table{
   padding: 0;
   font-size: 30px;
   position: absolute;
-  margin-top: -25px;
+  margin-top: 27px;
   margin-left: -25px;
 }
 
@@ -192,7 +192,7 @@ button#save_table{
   padding: 0;
   font-size: 30px;
   position: absolute;
-  margin-top: -25px;
+  margin-top: 27px;
   margin-left: -25px;
 }
 
@@ -216,9 +216,43 @@ p > var{
 
 }
 
+.form{
+  background: white;
+  max-width: 650px;
+  margin: auto;
+  border-radius: 4px;
+  position: relative;
+  display: inline-block;
+}
+
+.options{
+  position: absolute;
+  top: -8px;
+  left: 0;
+  width: 100%;
+}
+
+.tablink {
+  display: block;
+  border-radius: 4px;
+  background: rgba(160, 179, 176, 0.25);
+  color: #112C5F;
+  font-size: 20px;
+  float: left;
+  width: 33.33%;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+}
+
+.tablink:hover {
+    background-color: #bfbfbf;
+}
+
 #spending_table{
   background-color: white;
   margin: auto;
+  top: 55px;
   border-radius: 4px;
   position: relative;
   display: inline-block;
