@@ -7,7 +7,6 @@
 	<link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
 	<link href='https://fonts.googleapis.com/css?family=Sintony' rel='stylesheet'>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script type="text/javascript" src="Main.js"></script>
 </head>
 <body>
 	<div class='logo'>
@@ -282,8 +281,8 @@
 		            success: function(budget) {
 		                console.log(budget);
 						user_name = budget['name'];
-						user_location = budget['state'];
-						yearly_salary = budget['salary'];
+						user_location = user_location;
+						yearly_salary = yearly_salary;
 						after_tax_salary = budget['afterTaxSalary'];
 		                // populate table
 		                for(var i=0; i<budget.split.length; i++){
@@ -417,6 +416,8 @@
 		}
 
 		function modify_budget(){
+			var expense_entries = document.getElementsByClassName('expense_cell');
+			var percent_entries = document.getElementsByClassName('percent_cell');
 			/* ModifyBudget.php */
 			var obj  = {
 	        	'salary' : yearly_salary,
@@ -426,7 +427,7 @@
 				'name' : user_name
 			};
 
-			console.log("length of table entries" + expense_entries.length);
+			console.log("length of table entries " + expense_entries.length);
 	        for (var i = 0; i < expense_entries.length; i++){
 	            console.log(expense_entries[i].innerHTML);
 	            console.log(parseInt(percent_entries[i].innerHTML));

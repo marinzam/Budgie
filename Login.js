@@ -1,6 +1,5 @@
 // Javscript communication with PHP
 $(document).ready(function () {
-    alert("Hello World! login");
 
     var url_base = "https://wwwp.cs.unc.edu/Courses/comp426-f17/users/marinzam/Budgie/";
     $('#login_button').on('click',
