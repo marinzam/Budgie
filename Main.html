@@ -152,32 +152,34 @@
 			y.style.display = 'block';
 			main.style.display = 'none';
 
+			// var new_us = document.getElementById('new_user_salary').value;
+			// var new_ul = document.getElementById('selectstate').value;
 			/* CreateBudget.php */
-			$.ajax(url_base + "/CreateBudget.php",
-	            {type: "POST",
-	            dataType: "json",
-	            data: JSON.stringify({
-	                StateID: $("#selectstate").val(),
-	                Salary: $("#new_user_salary").val()
-	            }),
-	            success: function(budget) {
-	                console.log(budget);
-					user_name = budget['name'];
-					user_location = budget['state'];
-					yearly_salary = budget['salary'];
-					after_tax_salary = budget['afterTaxSalary'];
-	                // populate table
-	                for(var i=0; i<budget.split.length; i++){
-	                    var e = budget.split[i].name;
-	                    var p = budget.split[i].percentage;
-	                    enter_into_table(e,p);
-	                }
-					refresh_user_box();
-	            },
-	            error: function(response) {
-	                console.log(response);
-	            }
-	        }); // get budget
+			// $.ajax(url_base + "/CreateBudget.php",
+	        //     {type: "POST",
+	        //     dataType: "json",
+	        //     data: JSON.stringify({
+	        //         StateID: $("#selectstate").val(),
+	        //         Salary: $("#new_user_salary").val()
+	        //     }),
+	        //     success: function(budget) {
+	        //         console.log(budget);
+			// 		user_name = budget['name'];
+			// 		user_location = budget['state'];
+			// 		yearly_salary = budget['salary'];
+			// 		after_tax_salary = budget['afterTaxSalary'];
+	        //         // populate table
+	        //         for(var i=0; i<budget.split.length; i++){
+	        //             var e = budget.split[i].name;
+	        //             var p = budget.split[i].percentage;
+	        //             enter_into_table(e,p);
+	        //         }
+			// 		refresh_user_box();
+	        //     },
+	        //     error: function(response) {
+	        //         console.log(response);
+	        //     }
+	        // }); // create budget
 		}
 		else{
 			y.style.display = 'none';
@@ -264,9 +266,37 @@
 			else {
 				yearly_salary = new_us;
 				user_location = new_ul;
-
+				console.log(yearly_salary);
+				console.log(user_location);
 	    		main.style.display = 'block';
 	    		y.style.display = 'none';
+
+				/* CreateBudget.php */
+				$.ajax(url_base + "/CreateBudget.php",
+		            {type: "POST",
+		            dataType: "json",
+		            data: JSON.stringify({
+		                StateID: user_location,
+		                Salary: yearly_salary
+		            }),
+		            success: function(budget) {
+		                console.log(budget);
+						user_name = budget['name'];
+						user_location = budget['state'];
+						yearly_salary = budget['salary'];
+						after_tax_salary = budget['afterTaxSalary'];
+		                // populate table
+		                for(var i=0; i<budget.split.length; i++){
+		                    var e = budget.split[i].name;
+		                    var p = budget.split[i].percentage;
+		                    enter_into_table(e,p);
+		                }
+						refresh_user_box();
+		            },
+		            error: function(response) {
+		                console.log(response);
+		            }
+		        }); // create budget
 
 	    		refresh_user_box();
 
@@ -489,7 +519,7 @@
 					console.log(response);
 				}
 			});
-			location.href = "Main.html";
+			location.href = "Login.html";
 		}
 
 		function enter_into_table(e,p) {
@@ -575,7 +605,7 @@
 
 	    	calc_total_d();
 	    }
-	    
+
 	    elmnt.style.backgroundColor = color;
 	    elmnt.style.color = 'white';
 
