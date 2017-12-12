@@ -124,7 +124,10 @@
 	            },
 	            error: function(response) {
 	                console.log(response);
-					/* Put error functionality here */
+			var snack = document.getElementById('snackbar');
+			snack.className = 'show';
+			snack.innerHTML = 'Incorrect Password';
+			setTimeout(function(){ snack.className = snack.className.replace("show", ""); }, 3000);
 	            }});
 		}
 
