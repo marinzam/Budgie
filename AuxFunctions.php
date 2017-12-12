@@ -80,9 +80,6 @@ class Budget
         foreach ($data as $key => $value) $this->{$key} = $value;
     }
     public function getDiff($otherBudget){
-        if(count($otherBudget->split) !== count($this->split)){
-            return NULL;
-        }
         $splitSize = count($this->split);
         $differences = [];
         for ($i = 0; $i < $splitSize; $i++) {
