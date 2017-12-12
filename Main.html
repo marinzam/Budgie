@@ -2,7 +2,7 @@
 <html lang='en-US'>
 <head>
 	<title>Budgie</title>
-	 <meta charset="UTF-8">
+	<meta charset="UTF-8">
 	<link rel='stylesheet' type='text/css' href='Main.css'>
 	<link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
 	<link href='https://fonts.googleapis.com/css?family=Sintony' rel='stylesheet'>
@@ -125,6 +125,9 @@
 		var y = document.getElementById('enter_info');
 		var main = document.getElementById('main');
 
+		var url_base = "https://wwwp.cs.unc.edu/Courses/comp426-f17/users/marinzam/Budgie/";
+
+
 		var user_name = 'Sam'; /*replace with user first name*/
 		var user_location = 'Indiana';
 		var yearly_salary = 70000;/*replace with user yearly salary*/
@@ -148,12 +151,62 @@
 			var user_name = localStorage.getItem('first_name');
 			y.style.display = 'block';
 			main.style.display = 'none';
+
 			/* CreateBudget.php */
+			$.ajax(url_base + "/CreateBudget.php",
+	            {type: "POST",
+	            dataType: "json",
+	            data: JSON.stringify({
+	                StateID: $("#selectstate").val(),
+	                Salary: $("#new_user_salary").val()
+	            }),
+	            success: function(budget) {
+	                console.log(budget);
+					user_name = budget['name'];
+					user_location = budget['state'];
+					yearly_salary = budget['salary'];
+					after_tax_salary = budget['afterTaxSalary'];
+	                // populate table
+	                for(var i=0; i<budget.split.length; i++){
+	                    var e = budget.split[i].name;
+	                    var p = budget.split[i].percentage;
+	                    enter_into_table(e,p);
+	                }
+					refresh_user_box();
+	            },
+	            error: function(response) {
+	                console.log(response);
+	            }
+	        }); // get budget
 		}
 		else{
 			y.style.display = 'none';
 			main.style.display = 'block';
+
 			/* GetBudget.php */
+			$.ajax(url_base + "/GetBudget.php",
+				{type: "POST",
+				dataType: "json",
+				success: function(budget) {
+					console.log("success");
+					console.log(budget);
+					user_name = budget['name'];
+					user_location = budget['state'];
+					yearly_salary = budget['salary'];
+					after_tax_salary = budget['afterTaxSalary'];
+					// populate table
+					for(var i=0; i<budget.split.length; i++){
+						var e = budget.split[i].name;
+						var p = budget.split[i].percentage;
+						enter_into_table(e,p);
+					}
+					refresh_user_box();
+				},
+				error: function(response) {
+					console.log("error");
+					console.log(response);
+				}
+			}); // get budget
 		}
 
 		function calc_total_p(){
@@ -329,6 +382,41 @@
 
 			calc_total_p();
 			calc_total_d();
+
+			/* ModifyBudget.php */
+			var obj  = {
+	        	'salary' : yearly_salary,
+	        	'state' : user_location,
+	        	'afterTaxSalary' : after_tax_salary,
+	        	'split' : [],
+				'name' : user_name
+			};
+
+			console.log("length of table entries" + expense_entries.length);
+	        for (var i = 0; i < expense_entries.length; i++){
+	            console.log(expense_entries[i].innerHTML);
+	            console.log(parseInt(percent_entries[i].innerHTML));
+				obj.split.push({
+					'name' : expense_entries[i].innerHTML,
+					'percentage' : parseInt(percent_entries[i].innerHTML)
+				});
+
+	        }
+	        console.log("object created " +JSON.stringify(obj));
+
+	        $.ajax(url_base + "/ModifyBudget.php",
+	            {type: "POST",
+	            dataType: "json",
+	            data: JSON.stringify(obj),
+	            success: function(response) {
+	                console.log("success - modify");
+	                console.log(response);
+	            },
+	            error: function(response) {
+	                console.log("error - modify");
+	                console.log(response);
+	            }
+	        }); // modify budget
 		}
 
 		function enter_new_expense(){
@@ -350,7 +438,11 @@
 			}
 
 			else{
+				enter_into_table(e,p);
+				save_table_func();
+/* Added function */
 				add_expense_row();
+
 			}
 			//save data to expense table for user
 		}
@@ -383,7 +475,45 @@
 		}
 
 		function logout_user(){
+			save_table_func();
 			/*save budget information, then redirect to login.html*/
+			$.ajax(url_base + "/LogOut.php",
+				{type: "POST",
+				dataType: "json",
+				success: function(response) {
+					console.log("success - logout");
+					console.log(response);
+				},
+				error: function(response) {
+					console.log("error - logout");
+					console.log(response);
+				}
+			});
+			location.href = "Main.html";
+		}
+
+		function enter_into_table(e,p) {
+			var new_row = document.createElement("tr");
+			var row_cell_e = document.createElement("td");
+			row_cell_e.innerHTML = e;
+			row_cell_e.className = 'expense_cell';
+			var row_cell_p = document.createElement("td");
+			row_cell_p.innerHTML = parseInt(p, 10);
+			row_cell_p.className = 'percent_cell';
+			var row_cell_d = document.createElement("td");
+			row_cell_d.innerHTML = '$'+after_tax_salary*parseInt(p)/100;
+			row_cell_d.className = 'dollar_cell';
+			var bottom_row = document.getElementById('add_row');
+			new_row.append(row_cell_e);
+			new_row.append(row_cell_p);
+			new_row.append(row_cell_d);
+			bottom_row.parentNode.insertBefore(new_row, bottom_row);
+
+			document.getElementById('new_expense').value = "";
+			document.getElementById('new_percent').value = "";
+
+			calc_total_p();
+			calc_total_d();
 		}
 
 		function remove_row(r){
