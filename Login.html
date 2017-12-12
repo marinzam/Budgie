@@ -83,7 +83,7 @@
 		document.getElementById("signup_button").onclick = function(){
 			location.href = "Main.html";
 			localStorage.setItem('gate', 'SignUp');
-			localStorage.setItem('first_name', document.getElementById("input_first_name"));
+			localStorage.setItem('first_name', document.getElementById("input_first_name").value);
 		}
 
 		document.getElementById("login_button").onclick = function(){
