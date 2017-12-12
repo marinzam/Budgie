@@ -404,30 +404,27 @@
 
 			else{
 				enter_into_table(e,p);
-
+				save_table_func();
 			}
 			//save data to expense table for user
 		}
 
 		function logout_user(){
+			save_table_func();
 			/*save budget information, then redirect to login.html*/
-			$('#logout').on('click',
-		    function (e) {
-		        e.preventDefault();
-
-		        $.ajax(url_base + "/LogOut.php",
-		            {type: "POST",
-		            dataType: "json",
-		            success: function(response) {
-		                console.log("success - logout");
-		                console.log(response);
-		            },
-		            error: function(response) {
-		                console.log("error - logout");
-		                console.log(response);
-		            }
-		        });
-		    }); //logout button click
+			$.ajax(url_base + "/LogOut.php",
+				{type: "POST",
+				dataType: "json",
+				success: function(response) {
+					console.log("success - logout");
+					console.log(response);
+				},
+				error: function(response) {
+					console.log("error - logout");
+					console.log(response);
+				}
+			});
+			location.href = "Main.html";
 		}
 
 		function enter_into_table(e,p) {
