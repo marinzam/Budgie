@@ -90,25 +90,32 @@
 			<!--<button id='edit_user_info' onclick = 'edit_user_info()'>Edit</button>-->
 			<!--<button id='save_user_info' onclick = 'save_user_info()'>Save</button>-->
 		</div>
-		<table id='spending_table'>
-			<tr id = 'headers'>
-			    <th>Expense</th>
-			    <th>%</th>
-			    <th>$</th>
-			 </tr>
-			<tr id = 'add_row'>
-				<td><input id = 'new_expense' type="text" placeholder = "Enter a new expense"></td>
-				<td><input id = 'new_percent' type="text" placeholder = "% of budget"></td>
-				<td><button id = 'enter_new_expense' type = 'submit' onclick = 'enter_new_expense()'>Enter</button></td>
-			</tr>
-			<tfoot id = 'total'>
-   				<tr>
-				    <th>Total :</th>
-				    <th id = 'total_percent'>100</th>
-				    <th id = 'total_salary'><var class = 'ats'></var></th>
+		<div class = 'form'>
+			<div class = "options">
+					<button class = "tablink" onclick = "openOption('Y', this, '#112C5F')" id = "defaultOpen">Yearly</button>
+					<button class = "tablink" onclick = "openOption('M', this, '#112C5F')">Monthly</button>
+					<button class = "tablink" onclick = "openOption('B', this, '#112C5F')">Biweekly</button>
+			</div>
+			<table id='spending_table'>
+				<tr id = 'headers'>
+				    <th>Expense</th>
+				    <th>%</th>
+				    <th>$</th>
+				 </tr>
+				<tr id = 'add_row'>
+					<td><input id = 'new_expense' type="text" placeholder = "Enter a new expense"></td>
+					<td><input id = 'new_percent' type="text" placeholder = "% of budget"></td>
+					<td><button id = 'enter_new_expense' type = 'submit' onclick = 'enter_new_expense()'>Enter</button></td>
 				</tr>
-			</tfoot>
-		</table>
+				<tfoot id = 'total'>
+	   				<tr>
+					    <th>Total :</th>
+					    <th id = 'total_percent'>100</th>
+					    <th id = 'total_salary'><var class = 'ats'></var></th>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
 		<button id = 'edit_table' onclick = 'edit_table_func()'><img src="https://image.flaticon.com/icons/png/512/52/52951.png" width='50px' height="50px"></button>
 		<button id = 'save_table' onclick = 'save_table_func()'><img src="https://png.icons8.com/?id=11695&size=280" width='50px' height="50px"></button>
 		<div id='snackbar-main'></div>
@@ -130,6 +137,8 @@
 		var table = document.getElementById('spending_table');
 		var tperc = document.getElementById('total_percent');
 
+		var tmp = [];
+
     	/*initially hide save table button and save user button*/
     	save_table.style.display = 'none';
 		//save_user.style.display = 'none';
@@ -149,7 +158,6 @@
 
 		function calc_total_p(){
 			var sum_percentages = document.getElementsByClassName('percent_cell');
-			var labels = document.getElementsByClassName('expense_cell');
 			var sum = 0;
 			for(j = 0; j < sum_percentages.length; j++){
 				sum = sum + parseInt(sum_percentages[j].innerHTML);
@@ -180,7 +188,12 @@
 
 		function calc_total_d(){
 			var tsal = document.getElementById('total_salary');
-			tsal.innerHTML = '$'+after_tax_salary*parseInt(tperc.innerHTML)/100;
+			var sum_d = document.getElementsByClassName('dollar_cell');
+			var sum = 0;
+			for(j = 0; j < sum_d.length; j++){
+				sum = sum + parseFloat(sum_d[j].innerHTML.replace(/\$/g, ''));
+			}
+			tsal.innerHTML = '$'+parseFloat(sum).toFixed(2);
 
 		}
 
@@ -264,12 +277,19 @@
 			var expense_entries = document.getElementsByClassName('expense_cell');
 			var percent_entries = document.getElementsByClassName('percent_cell');
 			var dollar_entries = document.getElementsByClassName('dollar_cell');
+			var tabs = document.getElementsByClassName('tablink');
+			var k;
+			for (k = 0; k < tabs.length; k++){
+				tabs[k].disabled = true;
+			}
+			tmp = [];
 			var i;
 			for (i = 0; i < expense_entries.length; i++){
 				expense_entries[i].contentEditable = 'true';
 				percent_entries[i].contentEditable = 'true';
 				expense_entries[i].style.fontStyle = 'italic';
 				percent_entries[i].style.fontStyle = 'italic';
+				tmp[i] = dollar_entries[i].innerHTML.replace(/\$/g, '');
 				dollar_entries[i].innerHTML = '';
 
 				var delete_button = document.createElement('button');
@@ -288,13 +308,19 @@
 			var expense_entries = document.getElementsByClassName('expense_cell');
 			var percent_entries = document.getElementsByClassName('percent_cell');
 			var dollar_entries = document.getElementsByClassName('dollar_cell');
+			var tabs = document.getElementsByClassName('tablink');
+			var k;
+			for (k = 0; k < tabs.length; k++){
+				tabs[k].disabled = false;
+			}
 			var i;
 			for (i = 0; i < expense_entries.length; i++){
 				expense_entries[i].contentEditable = 'false';
 				percent_entries[i].contentEditable = 'false';
 				expense_entries[i].style.fontStyle = 'normal';
 				percent_entries[i].style.fontStyle = 'normal';
-				dollar_entries[i].innerHTML = '$'+ after_tax_salary*percent_entries[i].innerHTML/100;
+				//dollar_entries[i].innerHTML = '$'+ Math.round(after_tax_salary*percent_entries[i].innerHTML/100 * 100)/100;
+				dollar_entries[i].innerHTML = '$' + tmp[i];
 
 				dollar_entries[i].removeChild(dollar_entries[i].childNodes[1]);
 			}
@@ -341,7 +367,7 @@
 			row_cell_p.innerHTML = parseInt(p, 10);
 			row_cell_p.className = 'percent_cell';
 			var row_cell_d = document.createElement("td");
-			row_cell_d.innerHTML = '$'+after_tax_salary*parseInt(p)/100;
+			row_cell_d.innerHTML = '$'+(after_tax_salary*parseFloat(p)/100).toFixed(2);
 			row_cell_d.className = 'dollar_cell';
 			var bottom_row = document.getElementById('add_row');
 			new_row.append(row_cell_e);
@@ -363,10 +389,70 @@
 		function remove_row(r){
 			var i = r.parentNode.parentNode.rowIndex;
 			document.getElementById('spending_table').deleteRow(i);
+			tmp.splice((i-1),1);
 
 			calc_total_p();
-			calc_total_d();
+
+			var tsal = document.getElementById('total_salary');
+			//var sum_d = document.getElementsByClassName('dollar_cell');
+			var sum = 0;
+			for(j = 0; j < tmp.length; j++){
+				if(tmp[j] == null){
+					sum = sum + 0;
+				}
+				else{
+					sum = sum + parseFloat(tmp[j]);
+				}
+			}
+			tsal.innerHTML = '$'+ sum.toFixed(2);
 		}
+
+		function openOption(optionName, elmnt, color) {
+	    // Hide all elements with class="tabcontent" by default */
+	    var i, tablinks, p_cells, d_cells;
+
+	    d_cells = document.getElementsByClassName('dollar_cell');
+	    p_cells = document.getElementsByClassName('percent_cell');
+
+	    // Remove the background color of all tablinks/buttons
+	    tablinks = document.getElementsByClassName("tablink");
+	    for (i = 0; i < tablinks.length; i++) {
+	        tablinks[i].style.backgroundColor = '';
+	        tablinks[i].style.color = "";
+	    }
+
+	    // Show the specific tab content
+	    if(optionName == 'Y'){
+	    	for(i = 0; i < d_cells.length; i++){
+	    		d_cells[i].innerHTML = '$'+(after_tax_salary*parseFloat(p_cells[i].innerHTML)/100).toFixed(2);
+	    	}
+
+	    	calc_total_d();
+
+	    }
+	    else if(optionName == 'M'){
+	    	for(i = 0; i < d_cells.length; i++){
+	    		d_cells[i].innerHTML = '$'+((after_tax_salary*parseFloat(p_cells[i].innerHTML)/100)/12).toFixed(2);
+	    	}
+
+	    	calc_total_d();
+
+	    }
+	    else{
+	    	for(i = 0; i < d_cells.length; i++){
+	    		d_cells[i].innerHTML = '$'+((after_tax_salary*parseFloat(p_cells[i].innerHTML)/100)/24).toFixed(2);
+	    	}
+
+	    	calc_total_d();
+	    }
+	    
+	    elmnt.style.backgroundColor = color;
+	    elmnt.style.color = 'white';
+
+		}
+
+		// Get the element with id="defaultOpen" and click on it
+		document.getElementById("defaultOpen").click();
 	</script>
 </body>
 </html>
