@@ -147,9 +147,13 @@
 
 		/*if it is a new user, prompt them to enter in information*/
 		if (x==='SignUp'){
+			console.log("what is the received name");
+			console.log(localStorage.getItem('first_name'));
 			user_name = localStorage.getItem('first_name');
 			y.style.display = 'block';
 			main.style.display = 'none';
+			
+			refresh_user_box();
 
 			// var new_us = document.getElementById('new_user_salary').value;
 			// var new_ul = document.getElementById('selectstate').value;

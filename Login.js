@@ -18,7 +18,7 @@ $(document).ready(function () {
             },
             error: function(response) {
                 console.log(response);
-                
+
             }});
     }); //login button push
 
