@@ -6,7 +6,7 @@ $db = new mysqli("classroom.cs.unc.edu", "kjbass", "426password!", "kjbassdb");
 if(!isset($_SESSION['userID'])){
     header("Location: ./Login.html");
 }
-$userID = $_SESSION['userID']; 
+$userID = $_SESSION['userID'];
 
 $budget = new Budget(NULL,NULL,NULL,NULL, NULL);
 $budget->constructJSON($data);
@@ -15,7 +15,7 @@ $savedBudget = getBudget($budgetID, $userID, $db);
 
 $split = $budget->split;
 //delete splits for old split
-$stmt = $db->prepare("DELETE 
+$stmt = $db->prepare("DELETE
                         FROM ProjSplit
                         WHERE BudgetID=?;
 ");

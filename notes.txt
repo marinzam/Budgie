@@ -1,5 +1,20 @@
-next commit:
-added first name to local storage if new user in Login html
-retrieve first name if gate = signup
-
-name, salary, state, etc will have to be pulled from DB
+JSON format for budget
+{
+    "salary": 78000,
+    "state": "NC",
+    "afterTaxSalary": 76878,
+    "split": [
+        {
+            "name": "Necessities",
+            "percentage": 40
+        },
+        {
+            "name": "Goals",
+            "percentage": 19
+        },
+        {
+            "name": "Wants",
+            "percentage": 31
+        }
+    ]
+}

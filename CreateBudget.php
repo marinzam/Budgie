@@ -10,8 +10,8 @@ $state = $data->{"StateID"};
 $salary = $data->{"Salary"};
 // get state tax bracket
 $db = new mysqli("classroom.cs.unc.edu", "kjbass", "426password!", "kjbassdb");
-$stmt = $db->prepare('SELECT StateBracketID 
-                        FROM ProjStateTax s 
+$stmt = $db->prepare('SELECT StateBracketID
+                        FROM ProjStateTax s
                         WHERE s.StateID=?
                         AND ? between s.MinIncome AND s.MaxIncome;');
 $stmt->bind_param('si', $state, $salary);
@@ -20,8 +20,8 @@ $result = $stmt->get_result();
 $result = $result->fetch_assoc();
 $stateBracketID = $result['StateBracketID'];
 // get federal tax bracket
-$stmt = $db->prepare('SELECT FedBracketID 
-FROM ProjFedTax f 
+$stmt = $db->prepare('SELECT FedBracketID
+FROM ProjFedTax f
 WHERE ? between f.MinIncome AND f.MaxIncome;');
 $stmt->bind_param('i', $salary);
 $stmt->execute();
@@ -34,7 +34,7 @@ $stmt = $db->prepare('INSERT INTO ProjBudget(UserID, Salary, FedBracketID, State
 $stmt->bind_param('siii', $userID, $salary, $fedBracketID, $stateBracketID);
 $stmt->execute();
 // Insert default splits
-$stmt = $db->prepare('SELECT BudgetID 
+$stmt = $db->prepare('SELECT BudgetID
                         FROM ProjBudget b
                         WHERE b.UserID = ?;
 ');
