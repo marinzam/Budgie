@@ -9,13 +9,14 @@ alert("Hello World! main");
         e.preventDefault();
 
         $.ajax(url_base + "/CreateBudget.php",
-            {type: "GET",
+            {type: "POST",
             dataType: "json",
             data: JSON.stringify({
                 StateID: $("#selectstate").val(),
                 Salary: $("#new_user_salary").val()
             }),
             success: function(response) {
+                console.log(response);
                 var budget = response;
                 var myState = budget['state'];
                 var mySalary = budget['salary'];
@@ -35,27 +36,30 @@ alert("Hello World! main");
 
 // EXISTING USER GET BUDGET
 // if X != SignUp
-    // $.ajax(url_base + "/GetBudget.php",
-    //     {type: "GET",
-    //     dataType: "json",
-    //     success: function(response) {
-    //         console.log(response);
-    //         var budget = response;
-    //         var myFirstName = budget['name'];
-    //         var myState = budget['state'];
-    //         var mySalary = budget['salary'];
-    //         var myAfterTaxSalary = budget['afterTaxSalary'];
-    //         // populate table
-    //         for(var i=0; i<budget.split.length; i++){
-    //             var e = budget.split[i].name;
-    //             var p = budget.split[i].percentage;
-    //             enter_into_table(e,p);
-    //         }
-    //     },
-    //     error: function(response) {
-    //         console.log(response);
-    //     }
-    // }); // get budget
+
+// $.ajax(url_base + "/GetBudget.php",
+//     {type: "GET",
+//     dataType: "json",
+//     success: function(response) {
+//         console.log("success");
+//         console.log(response);
+//         var budget = response;
+//         var myFirstName = budget['name'];
+//         var myState = budget['state'];
+//         var mySalary = budget['salary'];
+//         var myAfterTaxSalary = budget['afterTaxSalary'];
+//         // populate table
+//         for(var i=0; i<budget.split.length; i++){
+//             var e = budget.split[i].name;
+//             var p = budget.split[i].percentage;
+//             enter_into_table(e,p);
+//         }
+//     },
+//     error: function(response) {
+//         console.log("error");
+//         console.log(response);
+//     }
+// }); // get budget
 
 // EDIT TABLE SAVE CHANGES
 
@@ -65,13 +69,15 @@ alert("Hello World! main");
     function (e) {
         e.preventDefault();
 
-        $.ajax(url_base + "/Logout.php",
+        $.ajax(url_base + "/LogOut.php",
             {type: "POST",
             dataType: "json",
             success: function(response) {
+                console.log("success - logout");
                 console.log(response);
             },
             error: function(response) {
+                console.log("error - logout");
                 console.log(response);
             }
         });
