@@ -342,33 +342,38 @@
 			}
 
 			else{
-				var new_row = document.createElement("tr");
-				var row_cell_e = document.createElement("td");
-				row_cell_e.innerHTML = e;
-				row_cell_e.className = 'expense_cell';
-				var row_cell_p = document.createElement("td");
-				row_cell_p.innerHTML = parseInt(p, 10);
-				row_cell_p.className = 'percent_cell';
-				var row_cell_d = document.createElement("td");
-				row_cell_d.innerHTML = '$'+after_tax_salary*parseInt(p)/100;
-				row_cell_d.className = 'dollar_cell';
-				var bottom_row = document.getElementById('add_row');
-				new_row.append(row_cell_e);
-				new_row.append(row_cell_p);
-				new_row.append(row_cell_d);
-				bottom_row.parentNode.insertBefore(new_row, bottom_row);
+				enter_into_table(e,p);
 
-				document.getElementById('new_expense').value = "";
-				document.getElementById('new_percent').value = "";
-
-				calc_total_p();
-				calc_total_d();
 			}
 			//save data to expense table for user
 		}
 
 		function logout_user(){
 			/*save budget information, then redirect to login.html*/
+		}
+
+		function enter_into_table(e,p) {
+			var new_row = document.createElement("tr");
+			var row_cell_e = document.createElement("td");
+			row_cell_e.innerHTML = e;
+			row_cell_e.className = 'expense_cell';
+			var row_cell_p = document.createElement("td");
+			row_cell_p.innerHTML = parseInt(p, 10);
+			row_cell_p.className = 'percent_cell';
+			var row_cell_d = document.createElement("td");
+			row_cell_d.innerHTML = '$'+after_tax_salary*parseInt(p)/100;
+			row_cell_d.className = 'dollar_cell';
+			var bottom_row = document.getElementById('add_row');
+			new_row.append(row_cell_e);
+			new_row.append(row_cell_p);
+			new_row.append(row_cell_d);
+			bottom_row.parentNode.insertBefore(new_row, bottom_row);
+
+			document.getElementById('new_expense').value = "";
+			document.getElementById('new_percent').value = "";
+
+			calc_total_p();
+			calc_total_d();
 		}
 
 	</script>

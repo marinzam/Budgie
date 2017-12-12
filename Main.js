@@ -35,34 +35,41 @@ alert("Hello World! main");
     }); //start budget button click
 
 // EXISTING USER GET BUDGET
-// if X != SignUp
+// inside HTML 
 
-// $.ajax(url_base + "/GetBudget.php",
-//     {type: "GET",
-//     dataType: "json",
-//     success: function(response) {
-//         console.log("success");
-//         console.log(response);
-//         var budget = response;
-//         var myFirstName = budget['name'];
-//         var myState = budget['state'];
-//         var mySalary = budget['salary'];
-//         var myAfterTaxSalary = budget['afterTaxSalary'];
-//         // populate table
-//         for(var i=0; i<budget.split.length; i++){
-//             var e = budget.split[i].name;
-//             var p = budget.split[i].percentage;
-//             enter_into_table(e,p);
-//         }
-//     },
-//     error: function(response) {
-//         console.log("error");
-//         console.log(response);
-//     }
-// }); // get budget
 
 // EDIT TABLE SAVE CHANGES
+    $('#save_table').on('click',
+    funtion (e) {
+        e.preventDefault();
 
+        var obj  = new Object();
+        obj.salary = new_user_salary;
+        obj.state = user_state;
+        obj.afterTaxSalary = ;
+
+        var expense_entries = document.getElementsByClassName('expense_cell');
+        var percent_entries = document.getElementsByClassName('percent_cell');
+        for (var i = 0; i < expense_entries.length; i++){
+            obj.split[i].name = expense_entries[i].value;
+            obj.split[i].percentage = percent_entries[i].value;
+
+        }
+
+        $.ajax(url_base + "/ModifyBudget.php",
+            {type: "POST",
+            dataType: "json",
+            data: JSON.stringify(obj),
+            success: function(response) {
+                console.log("success - modify");
+                console.log(response);
+            },
+            error: function(response) {
+                console.log("error - modify");
+                console.log(response);
+            }
+        }); // modify budget
+    }); // save table button
 
 // LOGOUT FUNCTIONALITY
     $('#logout').on('click',
