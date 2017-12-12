@@ -112,7 +112,7 @@ button:hover {
 #snackbar {
     visibility: hidden;
     min-width: 250px;
-    margin: auto;
+    margin-left: -125px;
     background-color: #112C5F;
     color: #fff;
     text-align: center;
