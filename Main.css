@@ -253,12 +253,15 @@ p > var{
   background-color: white;
   margin: auto;
   top: 55px;
+  margin-bottom: 30px;
   border-radius: 4px;
   position: relative;
   display: inline-block;
   border-collapse: collapse;
   max-width: 650px;
+  max-height: 300px;
   table-layout: fixed;
+  overflow-y: auto;
   -webkit-animation: fadeEffect 1.7s;
   animation: fadeEffect 1.7s;
 }
