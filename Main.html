@@ -7,6 +7,7 @@
 	<link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
 	<link href='https://fonts.googleapis.com/css?family=Sintony' rel='stylesheet'>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 </head>
 <body>
 	<div class='logo'>
@@ -117,12 +118,27 @@
 		</div>
 		<button id = 'edit_table' onclick = 'edit_table_func()'><img src="https://image.flaticon.com/icons/png/512/52/52951.png" width='50px' height="50px"></button>
 		<button id = 'save_table' onclick = 'save_table_func()'><img src="https://png.icons8.com/?id=11695&size=280" width='50px' height="50px"></button>
+
+		<div id='message'>
+			<p>It can be a challenge to stick to a budget. We want to set you up for success by helping you create a realistic budget that accounts for all of your expenses.</p>
+			<p>Budgie advocates the 50/30/20 method as the best way to spend your money responsibly!</p>
+		</div>
+		<!-- <p id='paragraph'>HELLO WORLD</p> -->
+		<canvas id="myDoughnut"></canvas>
+
 		<div id='snackbar-main'></div>
 	</div>
+	<!--<div id='testing'>
+		<p id='paragraph'>HELLO WORLD</p>
+		<canvas id="myDoughnut"></canvas>
+	</div>-->
+	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>-->
 	<script>
 		var x = localStorage.getItem('gate');
 		var y = document.getElementById('enter_info');
 		var main = document.getElementById('main');
+
+		var testing = document.getElementById('testing'); //STEPH TESTING
 
 		var url_base = "https://wwwp.cs.unc.edu/Courses/comp426-f17/users/marinzam/Budgie/";
 
@@ -140,6 +156,20 @@
 		var tperc = document.getElementById('total_percent');
 
 		var tmp = [];
+		var labels = [];
+		var percents = [];
+		var backgroundColors = [];
+		var myDoughnut;
+
+		var chartColors = [
+			'rgb(255, 99, 132)',
+			'rgb(255, 159, 64)',
+			'rgb(255, 205, 86)',
+			'rgb(75, 192, 192)',
+			'rgb(54, 162, 235)',
+			'rgb(153, 102, 255)'
+		];
+		var num_colors = chartColors.length;
 
     	/*initially hide save table button and save user button*/
     	save_table.style.display = 'none';
@@ -200,18 +230,81 @@
 					yearly_salary = budget['salary'];
 					after_tax_salary = budget['afterTaxSalary'];
 					// populate table
+					empty_chart_arrays();
 					for(var i=0; i<budget.split.length; i++){
 						var e = budget.split[i].name;
 						var p = budget.split[i].percentage;
 						enter_into_table(e,p);
+						/* Enter into chart - make sure arrays are empty*/
+		                enter_into_chart(e,p);
 					}
 					refresh_user_box();
+				},
+				complete: function(){
+					create_pie_chart();
+					myDoughnut.style.display='block';
 				},
 				error: function(response) {
 					console.log("error");
 					console.log(response);
 				}
 			}); // get budget
+		}
+
+		function create_pie_chart(){
+			// var expense_entries = document.getElementsByClassName('expense_cell');
+			// var percent_entries = document.getElementsByClassName('percent_cell');
+			// for (var i = 0; i < expense_entries.length; i++){
+			// 	console.log(expense_entries[i].innerHTML);
+	  //           console.log(parseInt(percent_entries[i].innerHTML));
+	  //           labels[i] = expense_entries[i].innerHTML;
+	  //           percents[i] = parseInt(percent_entries[i].innerHTML);
+	  //      
+	  // }
+			// console.log("expense column " + expense_entries.length);
+			var ctx = document.getElementById("myDoughnut");
+			myDoughnut = new Chart(ctx, {
+			    type: 'doughnut',
+			    data: {
+					labels: labels,
+					datasets:[{
+						label:'My Budget',
+						data: percents,
+						backgroundColor: backgroundColors
+						}]
+				}
+			});
+			console.log("These are the labels for the pie chart: " + labels.length);
+			console.log("These are the labels for the pie chart: " + labels.toString());
+			console.log("These are the percentages for the pie chart: " + percents.length);
+			console.log("These are the percentages for the pie chart: " + percents.toString());
+			console.log("These is length of the backgroundColors array" + backgroundColors.length);
+			console.log("These are the colors: " + backgroundColors.toString());
+
+			console.log("MyDoughnut data.labels: " + myDoughnut.data.labels.toString());
+			console.log("MyDoughnut data.datasets: " + myDoughnut.data.datasets.toString());
+			console.log("MyDoughnut data.datasets.data: " + myDoughnut.data.datasets[0].data.toString());
+			console.log("MyDoughnut data.datasets.backgroundColor: " + myDoughnut.data.datasets[0].backgroundColor.toString());
+
+		}
+
+		function update_pie_chart(){
+			console.log("Within update method: MyDoughnut data.labels: " + myDoughnut.data.labels.toString());
+			console.log("Within update method: MyDoughnut data.datasets: " + myDoughnut.data.datasets.toString());
+			console.log("Within update method: MyDoughnut data.datasets.data: " + myDoughnut.data.datasets[0].data.toString());
+			console.log("Within update method: MyDoughnut data.datasets.backgroundColor: " + myDoughnut.data.datasets[0].backgroundColor.toString());
+
+			myDoughnut.data.labels = labels;
+			myDoughnut.data.datasets[0].data = percents;
+			myDoughnut.data.datasets[0].backgroundColor = backgroundColors;
+			myDoughnut.update();
+
+			console.log("Within update method: These are the labels for the pie chart: " + labels.length);
+			console.log("Within update method: These are the labels for the pie chart: " + labels.toString());
+			console.log("Within update method: These are the percentages for the pie chart: " + percents.length);
+			console.log("Within update method: These are the percentages for the pie chart: " + percents.toString());
+			//console.log("Update: These is length of the backgroundColors array" + backgroundColors.length);
+			console.log("Within update method: These are the colors: " + backgroundColors.toString());
 		}
 
 		function calc_total_p(){
@@ -289,13 +382,20 @@
 						yearly_salary = yearly_salary;
 						after_tax_salary = budget['afterTaxSalary'];
 		                // populate table
+		                empty_chart_arrays();
 		                for(var i=0; i<budget.split.length; i++){
 		                    var e = budget.split[i].name;
 		                    var p = budget.split[i].percentage;
 		                    enter_into_table(e,p);
+		                    /* Enter into chart - make sure arrays are empty*/ 
+		                    enter_into_chart(e,p);
 		                }
 						refresh_user_box();
 		            },
+		            complete: function(){
+						create_pie_chart();
+						myDoughnut.style.display='block';
+					},
 		            error: function(response) {
 		                console.log(response);
 		            }
@@ -432,6 +532,8 @@
 			};
 
 			console.log("length of table entries " + expense_entries.length);
+	        empty_chart_arrays();
+//	        update_pie_chart();
 	        for (var i = 0; i < expense_entries.length; i++){
 	            console.log(expense_entries[i].innerHTML);
 	            console.log(parseInt(percent_entries[i].innerHTML));
@@ -439,8 +541,18 @@
 					'name' : expense_entries[i].innerHTML,
 					'percentage' : parseInt(percent_entries[i].innerHTML)
 				});
-
+				/* clear array because iterating through all table rows*/
+				/* Enter modified table into chart */
+				enter_into_chart(expense_entries[i].innerHTML,parseInt(percent_entries[i].innerHTML));
 	        }
+	        console.log("In modify budget before update pie chart: Type: " + myDoughnut.label);
+	        console.log("In modify budget before update pie chart: These are the labels for the pie chart: " + myDoughnut.label);
+			console.log("In modify budget before update pie chart: These are the labels for the pie chart: " + labels.toString());
+			console.log("In modify budget before update pie chart: These are the percentages for the pie chart: " + percents.length);
+			console.log("In modify budget before update pie chart: These are the percentages for the pie chart: " + percents.toString());
+			console.log("In modify budget before update pie chart: These is length of the backgroundColors array" + backgroundColors.length);
+			console.log("In modify budget before update pie chart: These are the colors: " + backgroundColors.toString());
+	        update_pie_chart();
 	        console.log("object created " +JSON.stringify(obj));
 
 	        $.ajax(url_base + "/ModifyBudget.php",
@@ -478,7 +590,10 @@
 
 			else{
 				enter_into_table(e,p);
+//				enter_into_chart(e,p);
 				modify_budget();
+
+//				update_pie_chart();
 
 			}
 			//save data to expense table for user
@@ -524,6 +639,22 @@
 
 			calc_total_p();
 			calc_total_d();
+			console.log("first: " + e);
+			console.log("second: " + p);
+			console.log("third: " + row_cell_d.innerHTML);
+		}
+
+		function enter_into_chart(e,p){
+			labels.push(e);
+			percents.push(p);
+			backgroundColors.push(chartColors[backgroundColors.length % num_colors]);
+			//push charColors[i] where i is current_index mod array_of_colors
+		}
+
+		function empty_chart_arrays(){
+			labels = [];
+			percents = [];
+			backgroundColors = [];
 		}
 
 		function remove_row(r){
