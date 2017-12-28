@@ -1,14 +1,14 @@
 h1 {
-	font-family: 'Comfortaa';
-	text-align: center;
-	margin: 40px 0 40px;
-	color: white;
-	font-size: 70px;
+  font-family: 'Comfortaa';
+  text-align: center;
+  margin: 40px 0 40px;
+  color: white;
+  font-size: 70px;
 }
 
 h2{
-	font-size: 25px;
-	color: #112C5F;
+  font-size: 25px;
+  color: #112C5F;
 }
 
 h2#welcome_user{
@@ -28,10 +28,10 @@ h3{
 }
 
 div > h3{
-	text-align: center;
-	margin: 40px 0 40px;
-	color: white;
-	font-size: 30px;
+  text-align: center;
+  margin: 40px 0 40px;
+  color: white;
+  font-size: 30px;
 }
 
 p{
@@ -45,23 +45,23 @@ p{
 }
 
 *{
-	box-sizing: border-box;
+  box-sizing: border-box;
   font-family: 'Sintony';
 }
 
 body {
-	background-color: #21ba89;
-	text-align: center;
+  background-color: #21ba89;
+  text-align: center;
 }
 
 #enter_info{
-	background: white;
-	padding: 20px;
-	max-width: 900px;
-	margin: 40px auto;
-	border-radius: 4px;
-	box-shadow: 0 4px 10px 4px rgba(19,35,47,0.3);
-	position: relative;
+  background: white;
+  padding: 20px;
+  max-width: 900px;
+  margin: 40px auto;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px 4px rgba(19,35,47,0.3);
+  position: relative;
    -webkit-animation: fadeEffect 0.7s;
   animation: fadeEffect 0.7s;
 }
@@ -216,6 +216,39 @@ p > var{
 
 }
 
+canvas{
+  background-color: white;
+  max-width: 650px;
+  margin: auto;
+  left: 8.2%;
+  top: 30px;
+  border-radius: 4px;
+  position: relative;
+  display: block;
+  transform: scale(.895);
+  padding: 10px 30px 30px;
+}
+
+#message{
+  float: left;
+  left: 135px;
+  top: 713px;
+  padding: 10px 10px 10px;
+  width: 220px;
+  background-color: white;
+  text-align: left;
+  border-radius: 4px;
+  display: inline-block;
+  position: absolute;
+    -webkit-animation: fadeEffect 1.7s;
+  animation: fadeEffect 1.7s;
+}
+
+#message p {
+  color: #112C5F;
+  font-size: 19px;
+}
+
 .form{
   background: white;
   max-width: 650px;
@@ -253,12 +286,15 @@ p > var{
   background-color: white;
   margin: auto;
   top: 55px;
+  margin-bottom: 30px;
   border-radius: 4px;
   position: relative;
   display: inline-block;
   border-collapse: collapse;
   max-width: 650px;
+  max-height: 300px;
   table-layout: fixed;
+  overflow-y: auto;
   -webkit-animation: fadeEffect 1.7s;
   animation: fadeEffect 1.7s;
 }
